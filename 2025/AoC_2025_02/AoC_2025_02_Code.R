@@ -6,11 +6,11 @@
 
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
-setwd("C:/Users/justi/OneDrive/Model/Advent of Code/2025/AoC_2025_02")
+setwd("C:/Users/justi/OneDrive/Documents/GitHub/AoC/2025/AoC_2025_02")
 
 
-Data.0  <-  read.csv("AoC_Input_2025_02_0.txt", header = FALSE, sep = "")$V1
-Data.1  <-  read.csv("AoC_Input_2025_02_1.txt", header = FALSE, sep = "")$V1
+Data.0  <-  read.csv("AoC_2025_02_Input_0.txt", header = FALSE, sep = "")$V1
+Data.1  <-  read.csv("AoC_2025_02_Input_1.txt", header = FALSE, sep = "")$V1
 
 options(scipen=99)
 
