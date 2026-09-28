@@ -6,7 +6,8 @@
 
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
-setwd("C:/Users/justi/OneDrive/Model/Advent of Code/2025/AoC_2025_01")
+setwd("C:/Users/justi/OneDrive/Documents/GitHub/AoC/2025/AoC_2025_01")
+
 
 
 Data.0  <-  read.csv("AoC_Input_2025_01_0.txt", header = FALSE, sep = "")$V1
@@ -20,7 +21,7 @@ Data.1  <-  read.csv("AoC_Input_2025_01_1.txt", header = FALSE, sep = "")$V1
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-Data          <-  Data.0
+Data          <-  Data.1
 X0            <-  50
 N             <-  100
 
@@ -43,6 +44,7 @@ F.Part.1   <-  function(Data, X0, N){
 
 F.Part.1(Data.0, 50, 100)
 F.Part.1(Data.1, 50, 100)
+
 
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
@@ -78,7 +80,7 @@ F.Part.2   <-  function(Data, X0, N){
   
 }
 
-# Note: We do not need to count the landings at zero explictly as they get pick up as a Pass on the 
+# Note: We do not need to count the landings at zero explictly as they get picked up as a Pass on the 
 #       next step implicitly, except where the very final landing spot happens to be zero.
 
 #====================================================================================================#
@@ -91,6 +93,9 @@ F.Part.2(Data.1, 50, 100)
 
 
 
-
+Time    <-  proc.time()
+F.Part.1(Data.1, 50, 100)
+F.Part.2(Data.1, 50, 100)
+Time    -  proc.time()
 
 
