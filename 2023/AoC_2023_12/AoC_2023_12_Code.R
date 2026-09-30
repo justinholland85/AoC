@@ -4,15 +4,14 @@
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
 
-setwd("C:/Users/justi/OneDrive/Model/Advent of Code/2023/Day_12")
+setwd("C:/Users/justi/OneDrive/Documents/GitHub/AoC/2023/AoC_2023_12")
 options(scipen = 99)
 
-Data.0    <-  read.csv("Example_Day_12.txt", header = FALSE, sep = "^")$V1
-Data.1    <-  read.csv("Input_Day_12.txt", header = FALSE, sep = "^")$V1
+Data.0    <-  read.csv("AoC_2023_12_Input_0.txt", header = FALSE, sep = "^")$V1
+Data.1    <-  read.csv("AoC_2023_12_Input_1.txt", header = FALSE, sep = "^")$V1
 
 
 
@@ -179,20 +178,24 @@ F.Part.1(Data.1)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+Data         <-  Data.1
+
+
+Split        <- strsplit(Data, " ")
+
+String       <-  lapply(Split ,  Lib.Take.One, 1)
+Pattern      <-  lapply(Split ,  Lib.Take.One, 2)
+
+
+String.Ext   <-  lapply(lapply(String, rep, 5), paste, collapse = "?")      
+Pattern.Ext  <-  lapply(lapply(Pattern, rep, 5), paste, collapse = ",")  
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+String.Ext[[997]]
+Pattern.Ext[[997]]
 
 
 

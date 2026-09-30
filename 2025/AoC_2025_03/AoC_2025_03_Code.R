@@ -198,4 +198,10 @@ F.Part.2(Data.0, 12)
 F.Part.2(Data.1, 12)
 
 
+Time    <-  proc.time()
+
+F.Part.1(Data.1)
+F.Part.2(Data.1, 12)
+
+Time    -  proc.time()
 
