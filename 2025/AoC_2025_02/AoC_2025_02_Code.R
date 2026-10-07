@@ -34,8 +34,6 @@ F.Part.1    <-  function(Data){
   
 #---- Data Setup
 
-  
-  
   Split         <-  unlist(strsplit(Data, split = ","))
   Split         <-  lapply(strsplit(Split, split = "-"), as.numeric)
    

@@ -14,12 +14,12 @@ Data.0  <-  read.csv("AoC_2025_01_Input_0.txt", header = FALSE, sep = "")$V1
 Data.1  <-  read.csv("AoC_2025_01_Input_1.txt", header = FALSE, sep = "")$V1
 
 
-
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
 # F.Part.1
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
+
 
 Data          <-  Data.1
 X0            <-  50
@@ -73,18 +73,7 @@ F.Part.2   <-  function(Data, X0, N){
   Pass        <-  (Direction == "L") * (Remainder > X[-Lambda]) +
                   (Direction == "R") * (Remainder > ((N - X[-Lambda]) %% N))
 
-  
-  Pass.L <- (Direction == "L") * (Remainder > X[-Lambda])
-  
-  Pass.R <- (Direction == "R") * (Remainder > ((N - X[-Lambda]) %% 100))
-  
-  sum(Pass.L)
-  sum(Pass.R)
-  sum(Pass.L + Pass.R)
-  
-  
-  
-  
+
   DF          <-  data.frame(X, dX = c(dX, NA), Pass = c(Pass,NA))
 
   return(sum(c(Pass, FullRots, X[Lambda] == 0 )))
