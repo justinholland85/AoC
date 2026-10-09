@@ -4,17 +4,18 @@
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
 Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
-Year          <- 2015
+Year          <- 2016
 Day           <- 1
 
 Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
 Dir           <-  paste0(Root,Year,"/", Ref)
 
 Name.Data.1   <-  paste0(Ref, "_Input_1.txt")
-                         
+
 #====================================================================================================#
 # Data  
 #====================================================================================================#
@@ -34,18 +35,37 @@ Data.1  <-  readLines(Name.Data.1)
 
 # Data       <-  Data.1
 
-F.Part.1   <-  function(Data){
-  
-  CharVal  <-  c("(" = 1, 
-                 ")" = -1)
-  
-  Split    <-  strsplit(Data, "")[[1]]
-  
-  Value    <-  CharVal[Split]
 
-  Floor    <-  sum(Value)
+F.Part.1   <-  function(Data){
+
   
-  return(Floor)
+  Split      <-  trimws(strsplit(Data,",")[[1]])
+  
+  Turn       <-  substr(Split, 1, 1)
+  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
+  
+  Turn       <-  ifelse(Turn == "L", -1, 1)  
+  Direction  <-  cumsum(Turn) %% 4
+  
+  # resisted urge to get vectors by math
+  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
+                                    "1" = c("x" = 1, "y" = 0),
+                                    "2" = c("x" = 0, "y" = -1),
+                                    "3" = c("x" = -1, "y" = 0)))
+  
+  
+  
+  Vectors    <- VectorMap[Direction + 1, ] 
+  
+  Move       <-  Vectors * Steps
+
+  Position   <-  apply(Move, 2, cumsum)   
+  
+  BunnyAt    <-  Position[length(Split), ]
+  
+  Manhatten  <-  sum(abs(BunnyAt))
+  
+  return(Manhatten)
   
 }
 
@@ -55,28 +75,53 @@ F.Part.1   <-  function(Data){
 
 F.Part.1(Data.1)
 
+
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
 # F.Part.2
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+
+
 # Data       <-  Data.1
 
-F.Part.2         <-  function(Data){
+
+F.Part.2   <-  function(Data){
   
-  CharVal        <-  c("(" = 1, 
-                       ")" = -1)
-   
-  Split          <-  strsplit(Data, "")[[1]]
   
-  Value          <-  CharVal[Split]
+  Split      <-  trimws(strsplit(Data,",")[[1]])
   
-  Position       <-  cumsum(Value)
+  Turn       <-  substr(Split, 1, 1)
+  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
   
-  FirstBasement  <-  which(Position == -1)[[1]]        
+  Turn       <-  ifelse(Turn == "L", -1, 1)  
+  Direction  <-  cumsum(Turn) %% 4
   
-  return(FirstBasement)
+  # resisted urge to get vectors by math
+  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
+                                    "1" = c("x" = 1, "y" = 0),
+                                    "2" = c("x" = 0, "y" = -1),
+                                    "3" = c("x" = -1, "y" = 0)))
+  
+  
+  
+  Vectors    <-  Lib.RowsToList(VectorMap[Direction + 1, ]) 
+  
+  Move       <-  do.call(rbind, c(list(c(0,0)), rep(Vectors , Steps)))
+  
+  Position   <-  data.frame(apply(Move, 2, cumsum))   
+  
+  Group      <-  Lib.GroupOn(Position$x, Position$y)
+  Seq        <-  Lib.SeqOn(Group)
+  
+  BunnyRef   <-  which(Seq==2)[1]
+  BunnyAt    <-  Position[BunnyRef, ]
+  
+  
+  Manhatten  <-  sum(abs(BunnyAt))
+  
+  return(Manhatten)
   
 }
 
@@ -85,25 +130,3 @@ F.Part.2         <-  function(Data){
 #====================================================================================================#
 
 F.Part.2(Data.1)
-
-######################################################################################################
-#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
-# Score:
-#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
-######################################################################################################
-
-
-Answer.p1      <-  74
-Answer.p2      <-  1795
-BadEntries.p1  <-  0
-BadEntries.p2  <-  0
-Help.p1        <-  "none"
-Help.p2        <-  "none"
-Diff.p1        <-  0
-Diff.p2        <-  0
-Start.p1       <-  20261007
-Comp.p1        <-  20261007
-Start.p2       <-  20261007
-Comp.p2        <-  20261007
-
-
