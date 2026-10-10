@@ -8,7 +8,7 @@
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
 Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
-Year          <- 2016
+Year          <- 2019
 Day           <- 1
 
 Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
@@ -33,41 +33,22 @@ Data.1  <-  readLines(Name.Data.1)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-# Data       <-  Data.1
+# Data   <-  Data.1
+
 
 
 F.Part.1   <-  function(Data){
-
   
-  Split      <-  trimws(strsplit(Data,",")[[1]])
+  Mass      <-  as.numeric(Data)
   
-  Turn       <-  substr(Split, 1, 1)
-  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
+  Fuel      <-  floor(Mass / 3) - 2 
   
-  Turn       <-  ifelse(Turn == "L", -1, 1)  
-  Direction  <-  cumsum(Turn) %% 4
+  Fuel.Tot  <-  sum(Fuel)
   
-  # resisted urge to get vectors by math
-  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
-                                    "1" = c("x" = 1, "y" = 0),
-                                    "2" = c("x" = 0, "y" = -1),
-                                    "3" = c("x" = -1, "y" = 0)))
-  
-  
-  
-  Vectors    <- VectorMap[Direction + 1, ] 
-  
-  Move       <-  Vectors * Steps
-
-  Position   <-  apply(Move, 2, cumsum)   
-  
-  BunnyAt    <-  Position[length(Split), ]
-  
-  Manhatten  <-  sum(abs(BunnyAt))
-  
-  return(Manhatten)
+  return(Fuel.Tot)
   
 }
+
 
 #====================================================================================================#
 # Execution  
@@ -82,74 +63,86 @@ F.Part.1(Data.1)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-
-
-# Data       <-  Data.1
-
+# Data   <-  Data.1
 
 F.Part.2   <-  function(Data){
   
+  Mass.0   <-  as.numeric(Data)
   
-  Split      <-  trimws(strsplit(Data,",")[[1]])
+  Fuel     <-  list()    
   
-  Turn       <-  substr(Split, 1, 1)
-  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
+  i.Mass   <-  Mass.0  
   
-  Turn       <-  ifelse(Turn == "L", -1, 1)  
-  Direction  <-  cumsum(Turn) %% 4
+  i        <- 1
   
-  # resisted urge to get vectors by math
-  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
-                                    "1" = c("x" = 1, "y" = 0),
-                                    "2" = c("x" = 0, "y" = -1),
-                                    "3" = c("x" = -1, "y" = 0)))
-  
-  
-  
-  Vectors    <-  Lib.RowsToList(VectorMap[Direction + 1, ]) 
-  
-  Move       <-  do.call(rbind, c(list(c(0,0)), rep(Vectors , Steps)))
-  
-  Position   <-  data.frame(apply(Move, 2, cumsum))   
-  
-  Group      <-  Lib.GroupOn(Position$x, Position$y)
-  Seq        <-  Lib.SeqOn(Group)
-  
-  BunnyRef   <-  which(Seq==2)[1]
-  BunnyAt    <-  Position[BunnyRef, ]
+  repeat{
+    
+    Fuel[[i]]  <-   pmax(floor(i.Mass / 3) - 2, 0) 
+    
+    if(sum(Fuel[[i]]) == 0){break} else {i.Mass <- Fuel[[i]]}
+    
+    i         <-  i + 1
+    
+    print(i)
+    
+  }
   
   
-  Manhatten  <-  sum(abs(BunnyAt))
+  Fuel.Tot  <-  sum(unlist(Fuel))
   
-  return(Manhatten)
+  return(Fuel.Tot)
   
 }
 
 #====================================================================================================#
 # Execution  
 #====================================================================================================#
-
+Time   <-  proc.time()
 F.Part.2(Data.1)
+Time   -  proc.time()
+
+
+
+Time   <-  proc.time()
+F.Part.2(rep(Data.1, 10000))
+Time   -  proc.time()
 
 
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
-# Score:
+# F.Part.2.v1
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+F.Part.2.v1   <-  function(Data){
+  
+  F.Recursive.FuelForMass  <-  function(x, Fuel){
+    
+    if(missing(Fuel)){Fuel <- 0}
+    
+    Add   <- max(floor(x / 3) - 2, 0) 
+    
+    if(Add == 0){return(Fuel)} else { return(F.Recursive.FuelForMass(Add, Fuel + Add)) }
+    
+  }
+  
+  
+  Mass        <-  as.numeric(Data)
 
-Answer.p1      <-  209
-Answer.p2      <-  136
-BadEntries.p1  <-  0
-BadEntries.p2  <-  0
-Help.p1        <-  "none"
-Help.p2        <-  "none"
-Diff.p1        <-  0
-Diff.p2        <-  0
-Start.p1       <-  20261008
-Comp.p1        <-  20261008
-Start.p2       <-  20261008
-Comp.p2        <-  20261008
+  Fuel        <-  sapply(Mass, F.Recursive.FuelForMass)
+  
+  Fuel.Tot    <-  sum(Fuel)
+  
+  return(Fuel.Tot)
+  
+}
+
+#====================================================================================================#
+# Execution  
+#====================================================================================================#
+Time   <-  proc.time()
+F.Part.2.v1(Data.1)
+Time   -  proc.time()
+
 
 

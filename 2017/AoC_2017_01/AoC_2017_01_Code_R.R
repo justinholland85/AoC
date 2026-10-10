@@ -8,7 +8,7 @@
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
 Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
-Year          <- 2016
+Year          <- 2017
 Day           <- 1
 
 Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
@@ -33,39 +33,20 @@ Data.1  <-  readLines(Name.Data.1)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-# Data       <-  Data.1
-
+# Data   <-  Data.1
 
 F.Part.1   <-  function(Data){
-
   
-  Split      <-  trimws(strsplit(Data,",")[[1]])
+  Split     <-  as.numeric(strsplit(Data, "")[[1]])
   
-  Turn       <-  substr(Split, 1, 1)
-  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
+  X.0       <-  Split
+  X.1       <-  c(Split[-1], Split[1])
   
-  Turn       <-  ifelse(Turn == "L", -1, 1)  
-  Direction  <-  cumsum(Turn) %% 4
+  Same      <-  X.0 == X.1
   
-  # resisted urge to get vectors by math
-  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
-                                    "1" = c("x" = 1, "y" = 0),
-                                    "2" = c("x" = 0, "y" = -1),
-                                    "3" = c("x" = -1, "y" = 0)))
+  Captcha   <-  sum(Same * X.0) 
   
-  
-  
-  Vectors    <- VectorMap[Direction + 1, ] 
-  
-  Move       <-  Vectors * Steps
-
-  Position   <-  apply(Move, 2, cumsum)   
-  
-  BunnyAt    <-  Position[length(Split), ]
-  
-  Manhatten  <-  sum(abs(BunnyAt))
-  
-  return(Manhatten)
+  return(Captcha)
   
 }
 
@@ -75,53 +56,28 @@ F.Part.1   <-  function(Data){
 
 F.Part.1(Data.1)
 
-
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
 # F.Part.2
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-
-
-# Data       <-  Data.1
-
+# Data   <-  Data.1
 
 F.Part.2   <-  function(Data){
   
+  Split     <-  as.numeric(strsplit(Data, "")[[1]])
   
-  Split      <-  trimws(strsplit(Data,",")[[1]])
+  N         <-  length(Split)
   
-  Turn       <-  substr(Split, 1, 1)
-  Steps      <-  as.numeric(substr(Split, 2, nchar(Split)))
+  X.0       <-  Split[1:(N/2)]
+  X.1       <-  Split[(N/2 + 1):N]
   
-  Turn       <-  ifelse(Turn == "L", -1, 1)  
-  Direction  <-  cumsum(Turn) %% 4
+  Same      <-  X.0 == X.1
   
-  # resisted urge to get vectors by math
-  VectorMap  <-  do.call(rbind,list("0" = c("x" = 0, "y" = 1),
-                                    "1" = c("x" = 1, "y" = 0),
-                                    "2" = c("x" = 0, "y" = -1),
-                                    "3" = c("x" = -1, "y" = 0)))
+  Captcha   <-  sum(Same * X.0) * 2
   
-  
-  
-  Vectors    <-  Lib.RowsToList(VectorMap[Direction + 1, ]) 
-  
-  Move       <-  do.call(rbind, c(list(c(0,0)), rep(Vectors , Steps)))
-  
-  Position   <-  data.frame(apply(Move, 2, cumsum))   
-  
-  Group      <-  Lib.GroupOn(Position$x, Position$y)
-  Seq        <-  Lib.SeqOn(Group)
-  
-  BunnyRef   <-  which(Seq==2)[1]
-  BunnyAt    <-  Position[BunnyRef, ]
-  
-  
-  Manhatten  <-  sum(abs(BunnyAt))
-  
-  return(Manhatten)
+  return(Captcha)
   
 }
 
@@ -139,17 +95,28 @@ F.Part.2(Data.1)
 ######################################################################################################
 
 
-Answer.p1      <-  209
-Answer.p2      <-  136
+Answer.p1      <-  1047
+Answer.p2      <-  982
 BadEntries.p1  <-  0
 BadEntries.p2  <-  0
 Help.p1        <-  "none"
 Help.p2        <-  "none"
 Diff.p1        <-  0
 Diff.p2        <-  0
-Start.p1       <-  20261008
-Comp.p1        <-  20261008
-Start.p2       <-  20261008
-Comp.p2        <-  20261008
+Start.p1       <-  20261009
+Comp.p1        <-  20261009
+Start.p2       <-  20261009
+Comp.p2        <-  20261009
+
+
+
+
+
+
+
+
+
+
+
 
 
