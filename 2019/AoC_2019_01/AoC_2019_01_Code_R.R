@@ -145,4 +145,9 @@ F.Part.2.v1(Data.1)
 Time   -  proc.time()
 
 
+Time   <-  proc.time()
+F.Part.2.v1(rep(Data.1, 10000))
+Time   -  proc.time()
+
+
 
