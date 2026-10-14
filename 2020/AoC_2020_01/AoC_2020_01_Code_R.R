@@ -30,7 +30,7 @@ Data.1  <-  readLines(Name.Data.1)
 
 
 
-
+Time    <-  proc.time()
 
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
@@ -77,21 +77,21 @@ F.Part.1(Data.1)
 
 F.Part.2   <-  function(Data){
   
-  Year     <-  2020
+  Year       <-  2020
   
-  X        <-  as.numeric(Data)
+  X          <-  as.numeric(Data)
   
-  Delta    <-  Year - X 
+  Delta      <-  Year - X 
   
-  Pairs    <-  expand.grid("A" = X, "B" = X)   
+  Pairs      <-  expand.grid("A" = X, "B" = X)   
   
   Pairs$Sum  <-  rowSums(Pairs)
   
-  Which    <-  which(Pairs$Sum %in% Delta)
+  Which      <-  which(Pairs$Sum %in% Delta)
   
   # Relying here on the three numbers needing to be distinct:
    
-  Product  <-  prod(unique(Pairs$A[Which]))
+  Product    <-  prod(unique(Pairs$A[Which]))
   
   return(Product)
   
@@ -105,6 +105,7 @@ F.Part.2   <-  function(Data){
 F.Part.2(Data.0)
 F.Part.2(Data.1)
 
+Time    -  proc.time()
 
 
 

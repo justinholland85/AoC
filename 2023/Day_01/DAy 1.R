@@ -1,1 +1,0 @@
-setwd("C:/Users/justi/Documents/Model/AdventOfCode/Day 1")
