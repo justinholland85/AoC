@@ -78,7 +78,6 @@ F.Part.1(Data.1)
 
 #   Modified for modern pattern and consistency with a few minor coding tweaks
 
-
 F.Part.2   <-  function(Data){
   
   DF            <-  data.frame(do.call(rbind, strsplit(Data, "  ")))
@@ -102,6 +101,7 @@ F.Part.2   <-  function(Data){
 
 F.Part.2(Data.0)
 F.Part.2(Data.1)
+
 
 
 

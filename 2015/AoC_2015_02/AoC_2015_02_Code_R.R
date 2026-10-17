@@ -1,0 +1,104 @@
+######################################################################################################
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
+# AoC Header 
+#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
+######################################################################################################
+
+
+source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
+
+Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
+Year          <- 2015
+Day           <- 2
+
+Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
+Dir           <-  paste0(Root,Year,"/", Ref)
+
+Name.Data.1   <-  paste0(Ref, "_Input_1.txt")
+
+#====================================================================================================#
+# Data  
+#====================================================================================================#
+
+setwd(Dir)
+
+# Data.0 is not useful here - it is just several messy examples
+Data.0   <-  c("2x3x4", "1x1x10")
+Data.1   <-  readLines(Name.Data.1)
+
+######################################################################################################
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
+# Part.1
+#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
+######################################################################################################
+
+# Data        <-  Data.1
+
+F.Part.1    <-  function(Data){
+
+  Dimensions         <-  data.frame(do.call(rbind, strsplit(Data, split = "x")))
+  names(Dimensions)  <-  c("L", "W", "H")
+  Dimensions         <- data.frame(lapply(Dimensions, as.numeric))
+ 
+  LW                 <-  Dimensions$L *  Dimensions$W
+  LH                 <-  Dimensions$L *  Dimensions$H
+  WH                 <-  Dimensions$W *  Dimensions$H
+  
+  SmallSide          <-  pmin(LW, LH, WH)
+  
+  WrappingPaper      <-  2 * (LW + LH + WH) + SmallSide
+  
+  WrappingPaper.Tot  <-  sum(WrappingPaper)
+  
+  return(WrappingPaper.Tot)
+ 
+   
+}
+  
+#====================================================================================================#
+# Execution  
+#====================================================================================================#
+
+
+F.Part.1(Data.1)
+
+######################################################################################################
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
+# Part.2
+#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
+######################################################################################################
+# Data        <-  Data.0
+# Data        <-  Data.1
+
+F.Part.2    <-  function(Data){
+  
+  Dimensions         <-  data.frame(do.call(rbind, strsplit(Data, split = "x")))
+  names(Dimensions)  <-  c("L", "W", "H")
+  Dimensions         <- data.frame(lapply(Dimensions, as.numeric))
+  
+  LW                 <-  Dimensions$L *  Dimensions$W
+  LH                 <-  Dimensions$L *  Dimensions$H
+  WH                 <-  Dimensions$W *  Dimensions$H
+  
+  Volume             <-  apply(Dimensions, 1, prod)
+  
+  LargeSide          <-  Lib.RowMax(Dimensions)
+  
+  SmallFace          <-  2 * (rowSums(Dimensions) - LargeSide)  
+  
+  Ribbon             <-  Volume + SmallFace
+  
+  Ribbon.Tot         <-  sum(Ribbon)
+  
+  return(Ribbon.Tot)
+  
+  
+}
+
+#====================================================================================================#
+# Execution  
+#====================================================================================================#
+
+F.Part.2(Data.0)
+F.Part.2(Data.1)
+

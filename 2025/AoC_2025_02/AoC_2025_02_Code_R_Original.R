@@ -1,18 +1,32 @@
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
-# Data 
+# AoC Header 
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
-setwd("C:/Users/justi/OneDrive/Documents/GitHub/AoC/2025/AoC_2025_02")
+Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
+Year          <- 2025
+Day           <- 2
+
+Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
+Dir           <-  paste0(Root,Year,"/", Ref)
+
+Name.Data.0   <-  paste0(Ref, "_Input_0.txt")
+Name.Data.1   <-  paste0(Ref, "_Input_1.txt")
+
+#====================================================================================================#
+# Data  
+#====================================================================================================#
 
 
-Data.0  <-  read.csv("AoC_2025_02_Input_0.txt", header = FALSE, sep = "")$V1
-Data.1  <-  read.csv("AoC_2025_02_Input_1.txt", header = FALSE, sep = "")$V1
+setwd(Dir)
 
-options(scipen=99)
+# Data.0 is not useful here - it is just several messy examples
+Data.0  <-  readLines(Name.Data.0)
+Data.1  <-  readLines(Name.Data.1)
 
 
 
@@ -22,21 +36,16 @@ options(scipen=99)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
-
-#====================================================================================================#
-# F.Part.1
-#====================================================================================================#
-
-Data        <-  Data.0
-Data        <-  Data.1
+#Data        <-  Data.0
+#Data        <-  Data.1
 
 F.Part.1    <-  function(Data){
   
-#---- Data Setup
-
+  #---- Data Setup
+  
   Split         <-  unlist(strsplit(Data, split = ","))
   Split         <-  lapply(strsplit(Split, split = "-"), as.numeric)
-   
+  
   Pairs         <-  data.frame(do.call(rbind, Split))
   
   names(Pairs)  <-  c("From", "To")
@@ -45,28 +54,28 @@ F.Part.1    <-  function(Data){
   
   Seq           <-  mapply(seq, as.list(Pairs$From), as.list(Pairs$To), SIMPLIFY = FALSE)
   Numbers.0     <-  unlist(Seq)
-
-#----- Quick Filters
-
-# -- number of digits must be even
-DigSplit    <-  lapply(strsplit(as.character(Numbers.0), split = ""), as.numeric)
-Length      <-  unlist(lapply(DigSplit, length))
-
-Numbers.1   <-   Numbers.0[which(Length  %% 2 == 0 )]
-
-#--- split in two parts
-AsChar     <-  as.character(Numbers.1)
-Nchar      <-  nchar(AsChar)
-
-PartA      <- substr(Numbers.1, 1, Nchar / 2)
-PartB      <- substr(Numbers.1, Nchar / 2 +  1, Nchar)
-
-#-- Check and Return
-Check  <-  PartA == PartB
-
-
-return(sum(Check * Numbers.1))
-
+  
+  #----- Quick Filters
+  
+  # -- number of digits must be even
+  DigSplit    <-  lapply(strsplit(as.character(Numbers.0), split = ""), as.numeric)
+  Length      <-  unlist(lapply(DigSplit, length))
+  
+  Numbers.1   <-   Numbers.0[which(Length  %% 2 == 0 )]
+  
+  #--- split in two parts
+  AsChar     <-  as.character(Numbers.1)
+  Nchar      <-  nchar(AsChar)
+  
+  PartA      <- substr(Numbers.1, 1, Nchar / 2)
+  PartB      <- substr(Numbers.1, Nchar / 2 +  1, Nchar)
+  
+  #-- Check and Return
+  Check  <-  PartA == PartB
+  
+  
+  return(sum(Check * Numbers.1))
+  
 }
 
 #====================================================================================================#
@@ -75,10 +84,6 @@ return(sum(Check * Numbers.1))
 
 F.Part.1(Data.0)
 F.Part.1(Data.1)
-
-
-
-
 
 
 ######################################################################################################
@@ -117,15 +122,11 @@ F.Sub.1  <-  function(X){
 
 
 
-
-
-
 #====================================================================================================#
 # F.Part.2
 #====================================================================================================#
-
-Data        <-  Data.0
-Data        <-  Data.1
+#Data        <-  Data.0
+#Data        <-  Data.1
 
 F.Part.2    <-  function(Data){
   
@@ -157,7 +158,7 @@ F.Part.2    <-  function(Data){
   Gt.1        <-  unlist(lapply(lapply(Values, ">", 1), prod))
   
   Numbers.1   <-  Numbers.0[which(Gt.1 == 1)]
-
+  
   
   
   #-- Check and Return
@@ -169,7 +170,7 @@ F.Part.2    <-  function(Data){
     
     Check[[i]]  <-   F.Sub.1(Numbers.1[i])
     
-   # print(i)
+    # print(i)
     
   }
   
@@ -184,3 +185,4 @@ F.Part.2    <-  function(Data){
 
 F.Part.2(Data.0)
 F.Part.2(Data.1)
+

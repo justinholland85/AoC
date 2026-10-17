@@ -74,6 +74,8 @@ F_Part_1(Data_1)
 
 def F_Part_2(Data): 
 
+    X             = Data
+
     Numbers       =  ["one",
                       "two",
                       "three",
@@ -95,25 +97,15 @@ def F_Part_2(Data):
     f"{First}{N}{Last}"
     for First, N, Last in zip(First_Letter, range(1, 10), Last_Letter)])
 
-    for Number, Replacement in zip(range(1, 10), Sub):
+    X = np.asarray(Data, dtype=str).copy()
+
+    for Number, Replacement in zip(Numbers, Sub):
         X = np.char.replace(X, Number, Replacement)
 
 # Pandas version
-#        X = X.str.replace(Number, Replacement, regex=False)
+#        X = X.str.replace(Number, Replacement, regex=False) 
 
-
-
-
-
-    # zip() pairs corresponding elements from First and Last.
-    # f + l joins the two digit strings into a single string.
-    # int() converts the combined string to a number.
-    # np.array() converts the results into a NumPy array.
-
-    CalibVal = np.array([int(f + l) for f, l in zip(First, Last)])
-
-    CalibVal_Sum =  sum(CalibVal)
-
+    CalibVal_Sum =  F_Part_1(X)
 
     return CalibVal_Sum
 
@@ -122,4 +114,4 @@ def F_Part_2(Data):
 # Execution  
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-F_Part_1(Data_1)
+F_Part_2(Data_1)
