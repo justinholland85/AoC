@@ -76,10 +76,6 @@ F.Part.2    <-  function(Data){
   names(Dimensions)  <-  c("L", "W", "H")
   Dimensions         <- data.frame(lapply(Dimensions, as.numeric))
   
-  LW                 <-  Dimensions$L *  Dimensions$W
-  LH                 <-  Dimensions$L *  Dimensions$H
-  WH                 <-  Dimensions$W *  Dimensions$H
-  
   Volume             <-  apply(Dimensions, 1, prod)
   
   LargeSide          <-  Lib.RowMax(Dimensions)
