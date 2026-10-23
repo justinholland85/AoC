@@ -79,7 +79,7 @@ def F_Part_2(Data):
 
     def F_Quotient(X):
 
-        Grid             = Lib_ExpandGrid(x = X, y = X)
+        Grid              = Lib_ExpandGrid(x = X, y = X)
         Grid              = Grid[Grid.x != Grid.y]
         Grid['Remainder'] =  Grid.x % Grid.y
         Grid['Quotient']  =  Grid.x / Grid.y
