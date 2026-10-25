@@ -35,14 +35,14 @@ Year,Day,Part,BadEntries,R,Py,Instructions,Image,Start_R,Complete_R,Start_Py,Com
 2020,2,2,0,1,1,1,1,20261021,20261021,20261023,20261023,0,0,3,1,1,303,,,
 2021,2,1,0,1,1,1,1,20261023,20261023,20261024,20261024,0,0,0,1,1,1855814,,,
 2021,2,2,0,1,1,1,1,20261024,20261024,20261024,20261024,0,0,0,1,1,1845455714,,,
-2022,2,1,,,,,,,,,,,,,,,,,,
-2022,2,2,,,,,,,,,,,,,,,,,,
-2023,2,1,,,,,,,,,,,,,,,,,,
-2023,2,2,,,,,,,,,,,,,,,,,,
-2024,2,1,,,,,,,,,,,,,,,,,,
-2024,2,2,,,,,,,,,,,,,,,,,,
-2025,2,1,-1,1,1,1,1,20251202,20251202,20261017,20261017,3,0,10,1,0.8,52316131093,,20261016,"No help origially, I obtained the idea to reverse my approach from Copliot & ChatGPT"
-2025,2,2,-1,1,1,1,1,20251202,20251202,20261017,20261017,6,0,10,1,0.8,69564213293,,20261016,"No help origially, I obtained the idea to reverse my approach from Copliot & ChatGPT"
+2022,2,1,1,1,1,1,1,20261024,20261024,20261025,20261025,1,0,6,1,1,15337,,,Error due to not reading the ordering - I was using paper scissors rock instead of rock paper scissors. No error in the algorithm. 
+2022,2,2,0,1,1,1,1,20261024,20261024,20261025,20261025,2,0,3,1,1,11696,,,"Difficulty is nothing to do with programming, just need to think out the modulo arithmetic"
+2023,2,1,-1,1,1,1,1,2023120X,2023120X,20261025,20261025,2,0,5,1,1,2286,,20261025,Completely rejigged to modern preferences
+2023,2,2,-1,1,1,1,1,2023120X,2023120X,20261025,20261025,0,0,0,1,1,60948,,20261025,Completely rejigged to modern preferences
+2024,2,1,-1,1,1,1,1,2023120X,2023120X,20261026,20261026,2,0,0,1,1,564,,20261025,Completely rejigged to modern preferences
+2024,2,2,-1,1,1,1,1,2023120X,2023120X,20261026,20261026,2,0,2,1,1,604,,20261025,Completely rejigged to modern preferences
+2025,2,1,-1,1,1,1,1,20251202,20251202,20261017,20261017,2,0,10,1,0.8,52316131093,,20261016,"No help originally, I obtained the idea to reverse my approach from Copliot & ChatGPT"
+2025,2,2,-1,1,1,1,1,20251202,20251202,20261017,20261017,6,0,10,1,0.8,69564213293,,20261016,"No help originally, I obtained the idea to reverse my approach from Copliot & ChatGPT"
 2015,3,1,,,,,,,,,,,,,,,,,,
 2015,3,2,,,,,,,,,,,,,,,,,,
 2016,3,1,,,,,,,,,,,,,,,,,,
