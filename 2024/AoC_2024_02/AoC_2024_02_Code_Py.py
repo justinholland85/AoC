@@ -120,18 +120,21 @@ def F_Part_2(Data):
 
             if Safe == 1:
                 break
-            
-        return Safe
 
+        return Safe
 
 
     #------------------------------------------------------------------------------------------------#
     # Safety Checks
     #------------------------------------------------------------------------------------------------#
 
-    Reports_Safe = [F_Safe_Reports(Report) for Report in Reports]
+    Safe_Original = [F_Safe(Report) for Report in Reports]
+    Safe_Dampener = [F_Safe_Dampener(Report) for Report in Reports]
 
-    Safe_Count   = sum(Reports_Safe)
+    Safe_Report   = np.array(Safe_Original) | np.array(Safe_Dampener)
+
+
+    Safe_Count   = sum(Safe_Report)
 
     return Safe_Count
 
@@ -140,4 +143,4 @@ def F_Part_2(Data):
 # Execution  
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-F_Part_1(Data_1)
+F_Part_2(Data_1)

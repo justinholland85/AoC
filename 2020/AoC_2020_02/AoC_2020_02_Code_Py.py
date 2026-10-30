@@ -4,7 +4,7 @@
 # AoC Header
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$#
-from AoC_2025_01_Py import Password
+
 from numpy import dtype
 from numpy import concatenate
 exec(open("C:/Users/justi/OneDrive/Documents/GitHub/Library_Py/Start.py").read())

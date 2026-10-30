@@ -43,8 +43,8 @@ Year,Day,Part,BadEntries,R,Py,Instructions,Image,Start_R,Complete_R,Start_Py,Com
 2024,2,2,-1,1,1,1,1,2023120X,2023120X,20261026,20261026,2,0,2,1,1,604,,20261025,Completely rejigged to modern preferences
 2025,2,1,-1,1,1,1,1,20251202,20251202,20261017,20261017,2,0,10,1,0.8,52316131093,,20261016,"No help originally, I obtained the idea to reverse my approach from Copliot & ChatGPT"
 2025,2,2,-1,1,1,1,1,20251202,20251202,20261017,20261017,6,0,10,1,0.8,69564213293,,20261016,"No help originally, I obtained the idea to reverse my approach from Copliot & ChatGPT"
-2015,3,1,,,,,,,,,,,,,,,,,,
-2015,3,2,,,,,,,,,,,,,,,,,,
+2015,3,1,0,1,,,,20261029,20261029,,,0,0,,1,,2565,,,
+2015,3,2,0,1,,,,20261031,20261031,,,0,0,,,,,,,
 2016,3,1,,,,,,,,,,,,,,,,,,
 2016,3,2,,,,,,,,,,,,,,,,,,
 2017,3,1,,,,,,,,,,,,,,,,,,
