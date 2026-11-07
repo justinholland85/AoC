@@ -34,7 +34,6 @@ Data.1      <-  readLines(Name.Data.1)
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 Data   <-  Data.0
-
 Data   <-  Data.1
 
 
@@ -148,9 +147,9 @@ F.Part.2          <-  function(Data){
     
   }
   
-  IndpendenyID    <-  which(Claims$Overlap == 0)
+  IndpendentID    <-  which(Claims$Overlap == 0)
 
-  return(IndpendenyID)
+  return(IndpendentID)
   
   
 }
