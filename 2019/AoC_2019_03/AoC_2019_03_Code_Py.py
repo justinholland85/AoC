@@ -95,7 +95,6 @@ F_Part_1(Data_1)
 # Data = Data_0
 # Data = Data_1
 
-
 def F_Part_2(Data): 
 
     VectorMap = np.array([

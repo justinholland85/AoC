@@ -1,18 +1,36 @@
 ######################################################################################################
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
-# Data 
+# AoC Header 
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
 
+
 source("C:/Users/justi/OneDrive/Documents/GitHub/RLibrary/Start.R")
 
-setwd("C:/Users/justi/OneDrive/Documents/GitHub/AoC/2025/AoC_2025_03")
+Root          <- "C:/Users/justi/OneDrive/Documents/GitHub/AoC/"
+Year          <- 2025
+Day           <- 3
+
+Ref           <-  paste0("AoC_", Year, "_", Lib.LeadingZeros(Day, 2))
+Dir           <-  paste0(Root,Year,"/", Ref)
 
 
-Data.0  <-  read.csv("AoC_2025_03_Input_0.txt", header = FALSE, sep = "")$V1
-Data.1  <-  read.csv("AoC_2025_03_Input_1.txt", header = FALSE, sep = "", colClasses = "character")$V1
+Name.Data.0      <-  paste0(Ref, "_Input_0.txt")
+Name.Data.1      <-  paste0(Ref, "_Input_1.txt")
 
-options(scipen=99)
+#====================================================================================================#
+# Data  
+#====================================================================================================#
+
+setwd(Dir)
+Data.0      <-  readLines(Name.Data.0)
+Data.1      <-  readLines(Name.Data.1)
+
+#====================================================================================================#
+# Revision Note 20261118
+#====================================================================================================#
+# Completely re-wrote to make recursive. Knowledge of what was to come of course informed the first 
+#  solution to be the general one. 
 
 
 
@@ -21,71 +39,70 @@ options(scipen=99)
 # Part.1
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
+# Data   <-  Data.0
+# Data   <-  Data.1
 
 
-#====================================================================================================#
-# F.Part.1
-#====================================================================================================#
-
-Data        <-  Data.0
-Data        <-  Data.1
-
-
-F.Part.1    <-  function(Data){
+F.Part.1                    <-  function(Data){
   
-  #-- Find firt and lat occurrence of each digit
-  MaxPos   <-  nchar(as.character(Data[1]))
-  
-  Digits  <-  seq(9, 1)
-  
-  Pos.1   <-  list()
-  Pos.N   <-  list()
-  
-  for(i in 1:9){
+ 
+  Split    <-  lapply(strsplit(Data, ""), as.numeric)
+
+  #--------------------------------------------------------------------------------------------------#
+  # F.Joltage
+  #--------------------------------------------------------------------------------------------------#
+
+  F.Joltage      <-  function(X, N, J = numeric(0)){
+    
+    Len.X    <-  length(X)
+    Len.J    <-  length(J)
+    
+    if(Len.J == N){
       
-    Gregexpr  <-  lapply(gregexpr(pattern = as.character(Digits[i]), text =  Data), as.numeric)
-    Length    <-  lapply(Gregexpr, length)
+      J    <-  as.numeric(paste(J, collapse = ""))
+      
+      return(J)
     
     
-    Pos.1[[i]]   <-  unlist(lapply(Gregexpr, Lib.Take.Which, 1))
-    Pos.N[[i]]   <-  unlist(mapply(Lib.Take.Which, Gregexpr, Length, SIMPLIFY = FALSE))
+    } else if(Len.X == (N - Len.J)){
+      
+      J    <-  as.numeric(paste(c(J, X), collapse = ""))
+      
+      return(J)
+      
+    } else {
+      
+      Max     <-  max(X[1:(Len.X - N + 1 + Len.J)])
+      W       <-  which(X == Max)[[1]]
+      
+      J       <-  c(J, Max)
+      X       <-  X[(W+1):Len.X]
+      
+      return(F.Joltage(X, N, J))
+      
+    }
+    
     
   }
   
-  Pos.1  <-  do.call(rbind, Pos.1)
-  Pos.N  <-  do.call(rbind, Pos.N)
-  
-  #-- the last position can't be first choice
-  Pos.1[which(Pos.1 == MaxPos)]  <-  -1
-  
-  
-  #---  Find highest value first choice
-  
-  Dummy.Dig   <-  array(dim = dim(Pos.1), Digits)
+  #--------------------------------------------------------------------------------------------------#
+  # Execute
+  #--------------------------------------------------------------------------------------------------#
 
+  Joltage.Tot  <-  sum(unlist(lapply(Split, F.Joltage, N = 2)))
   
-  Dig.First       <-  apply((Pos.1 > 0) * Digits, 2, max )
-  Dig.First.Mat   <-  t(array(dim = rev(dim(Dummy.Dig)), Dig.First))
-  
-  Pos.First       <-  (Dummy.Dig == Dig.First.Mat) * Pos.1
-  Pos.First       <-  apply(Pos.First, 2, max)
-  Pos.First.Mat   <-  t(array(dim = rev(dim(Dummy.Dig)), Pos.First))
-  
-  Dig.Second      <-  apply((Pos.N > Pos.First.Mat) * Dummy.Dig, 2, max )
-  
-  Pairs           <-  as.numeric(paste0(Dig.First, Dig.Second))
-  
-  return(sum(Pairs))
-  
-  
+  return(Joltage.Tot)
+   
 }
 
+
 #====================================================================================================#
-# Execution  
+# Execute
 #====================================================================================================#
 
 F.Part.1(Data.0)
 F.Part.1(Data.1)
+
 
 
 
@@ -94,114 +111,74 @@ F.Part.1(Data.1)
 # Part.2
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#
 ######################################################################################################
+# Data   <-  Data.0
+# Data   <-  Data.1
 
-X   <-  as.character(Data.0[[2]])
-d   <-  12
+# Note there is no difference to part 2 apart from the hard coded N parameter. Of course I could have 
+#  made N an argument to F.Part.1, but I'm ruthlessly following my pattern that each solution is a function
+#  of Data alone. 
 
-
-#====================================================================================================#
-# F.Sub.2.0
-#====================================================================================================#
-
-
-F.Sub.2.0   <- function(X, d){
+F.Part.2                    <-  function(Data){
   
-  Digits   <-  seq(9, 1)
-  MaxPos   <-  nchar(X)
   
-  Pos     <-  numeric(0)
+  Split    <-  lapply(strsplit(Data, ""), as.numeric)
   
-    for(i in 1:9){
+  #--------------------------------------------------------------------------------------------------#
+  # F.Joltage
+  #--------------------------------------------------------------------------------------------------#
+  
+  F.Joltage      <-  function(X, N, J = numeric(0)){
     
-      Pos[[i]]    <-  regexpr(pattern = as.character(Digits[i]), text =  X)[1]
+    Len.X    <-  length(X)
+    Len.J    <-  length(J)
+    
+    if(Len.J == N){
+      
+      J    <-  as.numeric(paste(J, collapse = ""))
+      
+      return(J)
+      
+      
+    } else if(Len.X == (N - Len.J)){
+      
+      J    <-  as.numeric(paste(c(J, X), collapse = ""))
+      
+      return(J)
+      
+    } else {
+      
+      Max     <-  max(X[1:(Len.X - N + 1 + Len.J)])
+      W       <-  which(X == Max)[[1]]
+      
+      J       <-  c(J, Max)
+      X       <-  X[(W+1):Len.X]
+      
+      return(F.Joltage(X, N, J))
       
     }
+    
+    
+  }
   
-  Pos[which(Pos > MaxPos -  d + 1)]  <-  -1
+  #--------------------------------------------------------------------------------------------------#
+  # Execute
+  #--------------------------------------------------------------------------------------------------#
   
-  Dig        <-  max(Digits * (Pos >  0))
+  Joltage.Tot  <-  sum(unlist(lapply(Split, F.Joltage, N = 12)))
   
-  MoveTo     <- Pos[match(Dig, Digits)]
-
-  Y  <-  substr(X, MoveTo + 1, nchar(X))
-
-  Output  <-  list(Dig= Dig,
-                   Y  = Y
-                   )
-  
-  return(Output)
-  
-}
-
-#====================================================================================================#
-# F.Sub.2.1
-#====================================================================================================#
-
-X   <-  as.character(Data.0[[2]])
-d   <-  12
-
-
-F.Sub.2.1   <- function(X, d){
-  
- Dig  <-  character(0)
-  
- for(i in 1:d){
-   
- Temp  <-  F.Sub.2.0(X, d + 1 - i)
- 
- Dig[[i]]  <-  Temp$Dig
- X         <-  Temp$Y 
- 
- }
-  
- return(as.numeric(paste(Dig, collapse = "")))
-  
+  return(Joltage.Tot)
   
 }
 
 
-
 #====================================================================================================#
-# F.Part.2
-#====================================================================================================#
-
-Data        <-  Data.0
-Data        <-  Data.1
-
-F.Part.2    <-  function(Data, d){
-  
-  N         <-  length(Data)
-  
-  Results   <-   numeric(0)
-    
-    
-  for(i in 1:N){
-    
-    Results[[i]]  <-  F.Sub.2.1(as.character(Data[[i]]), d)
-    
-  }
-  
-  return(sum(Results))
-  
-  
-  }
-  
-  
-  
-
-
-#====================================================================================================#
-# Execution  
+# Execute
 #====================================================================================================#
 
-F.Part.2(Data.0, 12)
-F.Part.2(Data.1, 12)
+F.Part.2(Data.0)
+F.Part.2(Data.1)
 
 
-Time    <-  proc.time()
 
-F.Part.1(Data.1)
-F.Part.2(Data.1, 12)
 
-Time    -  proc.time()
 
